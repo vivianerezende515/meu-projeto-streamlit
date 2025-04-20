@@ -2,7 +2,7 @@ import streamlit as st
 
 def buscar_criterios(especialidade):
     esp = especialidade.lower()
-    # Preencha com os critérios de ACESSO/ELEGIBILIDADE retirados da nota técnica REAL da fila!
+    # Preencha com os critérios de ACESSO/ELEGIBILIDADE/DESCRITIVO MÍNIMO retirados da nota técnica REAL da fila!
     if "oncologia" in esp:
         return {
             "fila": "Oncologia",
