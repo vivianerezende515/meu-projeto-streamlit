@@ -1,24 +1,24 @@
 import streamlit as st
 
-# ------- FUNÇÃO: CRITÉRIOS ESPECÍFICOS DA FILA/ESPECIALIDADE -------
 def buscar_criterios(especialidade):
     esp = especialidade.lower()
-    # Ajuste com os critérios reais de cada Nota Técnica
+    # Preencha com os critérios de ACESSO/ELEGIBILIDADE retirados da nota técnica REAL da fila!
     if "oncologia" in esp:
         return {
             "fila": "Oncologia",
             "nota_num": "16/2024",
             "nota_nome": "Nota Técnica 16/2024 - Oncologia Clínica",
             "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
-            "criterios": [
-                "Presença de diagnóstico histopatológico confirmado.",
-                "Encaminhamento com laudos e informações clínicas completas.",
-                "Classificação de risco segundo a nota técnica."
+            "criterios_acesso": [
+                "Diagnóstico confirmado por histopatológico",
+                "Laudos clínicos detalhados",
+                "Paciente residente e atendido no DF",
+                "Solicitação completa (anamnese, exame físico, etc.)"
             ],
-            "cores": {
-                "Vermelho": "Critérios de prioridade máxima (conforme Nota Técnica 16/2024): [Exemplo: compressão de medula, sangramento ativo, obstrução iminente].",
-                "Amarelo": "Prioridade intermediária (conforme Nota Técnica 16/2024): [Exemplo: doença localmente avançada sem sinais críticos, necessidade de início rápido do tratamento].",
-                "Verde": "Prioridade baixa (conforme Nota Técnica 16/2024): [Exemplo: paciente estável aguardando segmento, ausência de urgência]."
+            "criterios_cores": {
+                "Vermelho": "Prioridade máxima: sinais de compressão medular, sangramento ativo, risco vital imediato (Vide NT 16/2024 item X.X).",
+                "Amarelo": "Prioridade intermediária: doença avançada sem urgência, necessidade de início rápido do tratamento.",
+                "Verde": "Prioridade baixa: paciente estável, para segmento ambulatorial, sem piora clínica recente."
             }
         }
     elif "cardio" in esp:
@@ -27,15 +27,16 @@ def buscar_criterios(especialidade):
             "nota_num": "08/2023",
             "nota_nome": "Nota Técnica 08/2023 - Cardiologia",
             "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
-            "criterios": [
-                "Encaminhamento com Eletrocardiograma e exames complementares.",
-                "Descrição dos sintomas e classificação de risco.",
-                "Atendimento conforme protocolos clínicos da especialidade."
+            "criterios_acesso": [
+                "Encaminhamento da Atenção Primária",
+                "Eletrocardiograma e exames anexados",
+                "Relato clínico completo (sintomas, comorbidades)",
+                "Residir no DF ou áreas pactuadas"
             ],
-            "cores": {
-                "Vermelho": "Prioridade máxima (Nota Técnica 08/2023): situações agudas/instáveis, ex: dor torácica aguda, insuficiência cardíaca descompensada.",
-                "Amarelo": "Prioridade intermediária (Nota Técnica 08/2023): sintomas controlados ou exames alterados sem instabilidade.",
-                "Verde": "Prioridade baixa (Nota Técnica 08/2023): pacientes estáveis para acompanhamento e segmento ambulatorial."
+            "criterios_cores": {
+                "Vermelho": "Prioridade máxima: Situações como dor torácica aguda instável, IC descompensada, arritmia maligna.",
+                "Amarelo": "Situações controladas ou risco intermediário: alteração de exames sem gravidade, sintomas crônicos agravados.",
+                "Verde": "Segmento ou avaliação de rotina, estável, sem alteração aguda."
             }
         }
     else:
@@ -44,127 +45,123 @@ def buscar_criterios(especialidade):
             "nota_num": "--",
             "nota_nome": "Nota Técnica não localizada",
             "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
-            "criterios": [
-                "Não foi possível identificar critérios específicos. Consulte manualmente a nota técnica da especialidade."
+            "criterios_acesso": [
+                "Não foi possível identificar critérios específicos para esta especialidade. Consulte manualmente a nota técnica da fila."
             ],
-            "cores": {
+            "criterios_cores": {
                 "Vermelho": "-",
                 "Amarelo": "-",
                 "Verde": "-"
             }
         }
 
-# ------- FUNÇÃO: ANÁLISE E JUSTIFICATIVA -------
-def analisar_pedido(resumo, criterios):
-    resumo_lower = resumo.lower()
-    criterios_ = criterios["criterios"]
+def analisar_solicitacao(descritivo, criterios):
+    descritivo_lower = descritivo.lower()
+    # SIMULAÇÃO: ajuste a lógica conforme critérios reais!
+    # Aqui, só como exemplo didático:
+    criterios_atendidos = []
+    criterios_nao_atendidos = []
 
-    # Simulação de lógica — ADAPTE conforme realidade/nota técnica!
-    if not resumo.strip():
-        apto, justificativa = False, "Solicito complementação do descritivo/laudos para avaliação."
+    if not descritivo.strip():
         status = "Insuficiência de Informações"
-        redirecionamento = ""
-    elif "não atende" in resumo_lower:
-        apto, justificativa = False, f"Solicitação não atende aos critérios da Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}. Descrever critérios não atendidos objetivamente."
-        status = "Não Apto"
-        redirecionamento = f"Redirecionar para: [Fila adequada], conforme [www.saude.df.gov.br]({criterios['fonte']})"
-    elif "atende" in resumo_lower or "histopatológico" in resumo_lower:
-        apto, justificativa = True, f"Solicitação atende aos critérios da Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}. Aguarda vaga."
-        status = "Apto"
-        redirecionamento = ""
+        justificativa = "Solicito complementação do descritivo/laudos para avaliação."
+        apto = "Insuficiência de Informações"
     else:
-        apto, justificativa = False, "Solicito complementação do descritivo/laudos para avaliação."
-        status = "Insuficiência de Informações"
-        redirecionamento = ""
+        # Verifica cada critério de acesso
+        for criterio in criterios["criterios_acesso"]:
+            if criterio.lower() in descritivo_lower:
+                criterios_atendidos.append(criterio)
+            else:
+                criterios_nao_atendidos.append(criterio)
 
-    return status, justificativa, redirecionamento
+        if criterios_nao_atendidos:
+            status = "Não Apto"
+            justificativa = f"Solicitação não atende aos seguintes critérios de acesso/elegibilidade: {', '.join(criterios_nao_atendidos)}."
+            apto = "Não Apto"
+        else:
+            status = "Apto"
+            justificativa = f"Solicitação atende aos critérios de acesso/elegibilidade definidos na Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}. Aguarda vaga."
+            apto = "Apto"
+    return apto, justificativa, criterios_nao_atendidos
 
-def avaliar_classificacao_risco(registrada, criterios):
-    # Classifica como adequada, inadequada ou insuficiente
-    cor = registrada.strip().capitalize()
+def avaliar_classificacao_risco(classif_registrada, criterios):
+    classif_registrada = classif_registrada.capitalize()
     cores = ["Vermelho", "Amarelo", "Verde"]
-
-    if cor in cores:
+    if classif_registrada in cores:
         status = "Adequada"
-        texto = f"Classificação de risco adequada, conforme Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}."
-    elif cor == "" or cor == "Insuficiente" or cor not in cores:
+        justificativa = f"Classificação de risco adequada conforme critérios da Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}."
+    elif not classif_registrada or classif_registrada == "Insuficiente":
         status = "Dados Insuficientes"
-        texto = "Os dados apresentados não permitem determinar a classificação de risco adequada, pois faltam informações essenciais para a análise."
+        justificativa = "Os dados apresentados não permitem determinar a classificação de risco adequada. Faltam informações essenciais."
     else:
         status = "Inadequada"
-        texto = "Classificação de risco inadequada."
-    return status, texto
+        justificativa = "Classificação de risco inadequada."
+    return status, justificativa
 
-def sugerir_reclassificacao(resumo, criterios):
-    # Simula identificação de cor (ADAPTE ao critério real da nota técnica)
-    resumo_lower = resumo.lower()
-    cores = criterios["cores"]
-    if "critério vermelho" in resumo_lower:
+def sugerir_reclassificacao(descritivo, criterios):
+    descritivo_lower = descritivo.lower()
+    # SIMULAÇÃO – ajuste conforme literatura real das notas técnicas:
+    c_cores = criterios["criterios_cores"]
+    if "critério vermelho" in descritivo_lower:
         cor = "Vermelho"
-        justificativa = cores["Vermelho"]
-    elif "critério amarelo" in resumo_lower:
+        justificativa = c_cores["Vermelho"]
+    elif "critério amarelo" in descritivo_lower:
         cor = "Amarelo"
-        justificativa = cores["Amarelo"]
-    elif "critério verde" in resumo_lower:
+        justificativa = c_cores["Amarelo"]
+    elif "critério verde" in descritivo_lower or descritivo:
         cor = "Verde"
-        justificativa = cores["Verde"]
+        justificativa = c_cores["Verde"]
     else:
-        cor = "Insuficiente"
-        justificativa = criterios["cores"].get("Insuficiente", "Os dados não permitem classificação, pois faltam informações essenciais.")
+        cor = "Dados Insuficientes"
+        justificativa = "Os dados apresentados não permitem classificar corretamente o risco."
     return cor, justificativa
 
-# ------------- INTERFACE ---------
-st.title("Apoio ao Regulador – Modelo Padronizado de Parecer – SISREG III / SES DF")
-st.write("""
-Preencha os campos conforme a regulação, para obter um parecer estruturado.
-""")
-
+# ------- INTERFACE STREAMLIT -------
+st.title("Regulação SES DF – Análise Técnica Padronizada SISREG III")
+st.write("""Preencha os campos conforme rotina, para laudo estruturado. Os critérios de acesso/elegibilidade estarão destacados no parecer.""")
 descritivo = st.text_area("1. Descritivo do Caso Clínico:", "")
 especialidade = st.text_input("2. Fila / Especialidade:", "")
 classif_registrada = st.selectbox("Classificação de Risco Registrada:", ["", "Vermelho", "Amarelo", "Verde", "Insuficiente"])
 
 if st.button("Gerar Análise Reguladora"):
-    # Busca critérios da fila
     criterios = buscar_criterios(especialidade)
-    # Análise da solicitação
-    status, justificativa, redirecionamento = analisar_pedido(descritivo, criterios)
-    # Análise da classificação de risco registrada
-    risco_status, risco_texto = avaliar_classificacao_risco(classif_registrada, criterios)
-    # Reclassificação sugerida, se necessário
-    cor_sugerida, justificativa_cor = sugerir_reclassificacao(descritivo, criterios)
-    # Monta e exibe parecer
+    apto, justificativa, criterios_faltantes = analisar_solicitacao(descritivo, criterios)
+    risco_status, risco_justi = avaliar_classificacao_risco(classif_registrada, criterios)
+    cor_recomendada, justificativa_cor = sugerir_reclassificacao(descritivo, criterios)
+    
     resultado = f"""
-----------------
+-------------------------
 **1. Descritivo do Caso Clínico:**  
 {descritivo if descritivo else '[ ]'}
 
-**2. Avaliação da Solicitação:**  
+**2. Critérios de Acesso/Elegibilidade (segundo a Nota Técnica):**  
+*Atenção: Verifique se o caso atende a todos os critérios abaixo:*
+    - {"\n    - ".join(criterios['criterios_acesso'])}
+
+**3. Avaliação da Solicitação:**  
 Fila: {criterios['fila'] if criterios['fila'] else '[ ]'}  
 Classificação de Risco Registrada: {classif_registrada if classif_registrada else '[ ]'}
 
-**3. Análise Final:**  
-{('(X) Apto:\n' + justificativa) if status=='Apto' else ''}
-{('(X) Não Apto:\n' + justificativa + ('\n' + redirecionamento if redirecionamento else '')) if status=='Não Apto' else ''}
-{('(X) Insuficiência de Informações:\nSolicito complementação do descritivo/laudos para avaliação.') if status=='Insuficiência de Informações' else ''}
+**4. Análise Final:**  
+{'(X) Apto:\n' + justificativa if apto=='Apto' else ''}
+{'(X) Não Apto:\n' + justificativa + '\nCritérios não atendidos: ' + ', '.join(criterios_faltantes) if apto=='Não Apto' else ''}
+{'(X) Insuficiência de Informações:\nSolicito complementação do descritivo/laudos para avaliação.' if apto=='Insuficiência de Informações' else ''}
 
-**4. Classificação de Risco:**  
-{('(X) Adequada:\n' + risco_texto) if risco_status == 'Adequada' else ''}
-{('(X) Inadequada:\n' + risco_texto) if risco_status == 'Inadequada' else ''}
-{('(X) Dados Insuficientes:\n' + risco_texto) if risco_status == 'Dados Insuficientes' else ''}
+**5. Classificação de Risco:**  
+{'(X) Adequada:\n' + risco_justi if risco_status == "Adequada" else ''}
+{'(X) Inadequada:\n' + risco_justi if risco_status == "Inadequada" else ''}
+{'(X) Dados Insuficientes:\n' + risco_justi if risco_status == "Dados Insuficientes" else ''}
 
-{"*"*5 if risco_status != 'Dados Insuficientes' else ''}
-{"Caso seja possível classificar com os dados disponíveis, a reclassificação deve considerar os seguintes critérios de prioridade, conforme a Nota Técnica Nº " + criterios['nota_num'] + " - " + criterios['nota_nome'] + ":" if risco_status == 'Dados Insuficientes' or risco_status == 'Inadequada' else ''}
-
-    ( ) Vermelho: {criterios['cores'].get('Vermelho','-')}
-    ( ) Amarelo: {criterios['cores'].get('Amarelo','-')}
-    ( ) Verde: {criterios['cores'].get('Verde','-')}
-
-Portanto, recomenda-se reclassificar para: [ {cor_sugerida} ].
+* Caso precise reclassificar, utilize critérios:
+    - ( ) Vermelho: {criterios['criterios_cores'].get('Vermelho','-')}
+    - ( ) Amarelo: {criterios['criterios_cores'].get('Amarelo','-')}
+    - ( ) Verde: {criterios['criterios_cores'].get('Verde','-')}
+Portanto, recomenda-se reclassificar para: **{cor_recomendada}**  
 Justificativa: {justificativa_cor}
 
-**5. Fonte:**  
+**6. Fonte:**  
 Nota Técnica Nº {criterios['nota_num']} - {criterios['nota_nome']}  
 e [www.saude.df.gov.br]({criterios['fonte']})  
-----------------
+-------------------------
 """
     st.markdown(resultado)
