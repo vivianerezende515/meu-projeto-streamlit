@@ -65,12 +65,12 @@ criterios_filas = {
         "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
         "critérios acesso ": {
             "ENDOMETRIOSE PROFUNDA": [
-                "Descritivo mínimo que o encaminhamento deve conter: • Sinais e sintomas (com descrição do hábito intestinal e urinário, atividade física, atividade laboral e outras informações relevantes); Relatórios de cirurgias prévias, seja por laparotomia seja por laparoscopia, se realizou; Exame físico geral e ginecológico completo (exame da genitália, exame especular, toque vaginal e exame das mamas); Descrição da fase reprodutiva da mulher (menacme, perimenopausa ou pós-menopausa); Resultado dos exames da propedêutica mínima, com ênfase para os exames de imagem, com data; Tratamento em uso e os já realizados para DPC (medicamentos utilizados com posologia e tempo de uso), Ultrassonografia transvaginal DE MAPEAMENTO para endometriose, com data; OU Descrição de outro exame de imagem como Ressonância Magnética, com data; Colonoscopia ou Cistoscopia, se houver, com data;.”
+                "Descritivo mínimo que o encaminhamento deve conter: • • Sinais e sintomas (caracterização do quadro, descrição do hábito intestinal e urinário, exame físico e ginecológico completo); • Tratamento em uso ou já realizado (medicamentos utilizados com posologia); • História de cirurgias abdominais ou ginecológicas prévias; • Exame físico, abdominal e ginecológico completo com exame especular e toque vaginal; • Descrição da fase da mulher, se menacme, perimenopausa ou pós-menopausa; • Resultado dos exames da propedêutica mínima, com data; • Mulheres no menacme: CA125, Beta-HCG, TSH, FSH, Prolactina; • Ultrassonografia de Abdômen total, com data. • Colonoscopia ou Cistoscopia, com data. • Colpocitologia Oncótica (CCO) preventivo recente (colhida há menos de 01 ano).”
              ]
         },
         "criterios_classificacao_risco": {
-            "Vermelho": "Pacientes com diagnóstico de endometriose profunda infiltrativa por exames de imagem, COM estreitamento de retossigmoide ou COM hidronefrose devido a obstrução de ureter ou COM sintomatologia álgica sem resposta a analgesia por via oral..",
-            "Amarelo": "Pacientes com diagnóstico de endometriose profunda infiltrativa por exames de imagem, COM comprometimento intestinal ou de trato urinário que NÃO produz estreitamento ou obstrução ou com sintomatologia álgica leve ou moderada.  
+            "Vermelho": A - Pacientes com diagnóstico de endometriose profunda infiltrativa por exames de imagem, * com estreitamento de reto sigmóide, e/ou * com hidroneforose devido obstrução de ureter, e * com sintomatologia álgica sem resposta a analgesia por via oral. B - Pacientes com diagnóstico de endometriose profunda infiltrativa por exames de imagem, com desejo reprodutivo",
+            "Amarelo": "iagnóstico de endometriose profunda infiltrativa por exames de imagem, * sem estreitamento de reto sigmóide, ou * sem hidroneforose devido compressão de ureter, e * com sintomatologia álgica leve ou moderada. 
        }
     },
 
