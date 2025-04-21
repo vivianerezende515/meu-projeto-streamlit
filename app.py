@@ -246,7 +246,7 @@ Tratamento em uso ou já realizado para o sangramento uterino anormal (medicamen
         }
     },
 
-    import streamlit as st
+   import streamlit as st
 
 # (Código da estrutura de dados criterios_filas conforme o exemplo acima)
 
@@ -315,14 +315,3 @@ if st.button("Gerar Laudo"):
     # Adicionar a nota para o regulador
     st.write("---")
     st.write("Observação: Registre a avaliação e a classificação de risco no sistema.")
-
-
-
-
-
-
-
-
-
-
- 
