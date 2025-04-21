@@ -1,7 +1,7 @@
 import streamlit as st
 # 1. Definir os critérios para cada fila
 criterios_filas = {
-    "CIRURGIA GINECOLÓGICA ELETIVA - UROGINECOLOGIA - PANORAMA 3": {
+    "UROGINECOLOGIA": {
         "nota_num": "12/2023",
         "nota_nome": "CONDIÇÕES CLÍNICAS PARA ENCAMINHAMENTO PARA REGULAÇÃO DE CIRURGIA GINECOLÓGICA ELETIVA - UROGINECOLOGIA - PANORAMA 3",
         "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
@@ -76,7 +76,7 @@ criterios_filas = {
 
 # 1. Definir os critérios para cada fila
 criterios_filas = {
-    "CIRURGIA GINECOLÓGICA ELETIVA - PANORAMA 3": {
+    "CIRURGIA GINECOLÓGICA": {
         "nota_num": "Nota Técnica N.º 12/2023 - SES/SAIS/CATES/DUAEC ANEXO 1",
         "nota_nome": "CIRURGIA GINECOLÓGICA ELETIVA - PANORAMA 3",
         "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
@@ -172,6 +172,9 @@ criterios_filas = {
 "Verde ": " B - Hipertrofia dos pequenos lábios, menor que 8 cm de altura",
         },
         },
+# Adicione outras filas aqui, se necessário
+}
+
 
 
 
