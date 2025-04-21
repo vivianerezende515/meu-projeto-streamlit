@@ -23,7 +23,7 @@ criterios_filas = {
             "fonte": "https://www.saude.df.gov.br/notas-tecnicas",
             "criterios_acesso": [
                 "Sinais e sintomas (tempo de evolução, outras informações relevantes)",
-“Exame físico, abdominal e exame ginecológico completo",
+"Exame físico, abdominal e exame ginecológico completo",
 “Cirurgia prévia se realizada, com data", 
 “Ultrassonografia transvaginal ou pélvica, com data", 
 “Tratamento em uso ou já realizado (medicamentos usados com posologia)."
